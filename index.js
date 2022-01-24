@@ -38,9 +38,9 @@ function trimPropertiesMutation(obj) {
  * findLargestInteger([{ integer: 1 }, { integer: 3 }, { integer: 2 }]) // returns 3
  */
 function findLargestInteger(integers) {
-  let result = integers[0].interger
+  let result = integers[0].integer
   for (let idx = 1; idx < integers.length; idx++) {
-    if (integers[idx].interger > result) {
+    if (integers[idx].integer > result) {
       result = integers[idx].integer
     }
   }
@@ -115,6 +115,8 @@ class Car {
   constructor(name, tankSize, mpg) {
     this.odometer = 0 // car initilizes with zero miles
     this.tank = tankSize // car initiazes full of gas
+    this.tankSize = tankSize
+    this.mpg = mpg
     // ✨ initialize whatever other properties are needed
   }
 
@@ -132,7 +134,15 @@ class Car {
    * focus.drive(200) // returns 600 (ran out of gas after 100 miles)
    */
   drive(distance) {
-    // ✨ implement
+    const miles = this.tank * this.mpg
+    if (distance <= miles) {
+      this.odometer = this.odometer + distance
+      this.tank = this.tank - (distance / this.mpg)
+      return this.odometer
+    } 
+    this.odometer = this.odometer + miles
+    this.tank = 0
+    return this.odometer
   }
 
   /**
@@ -147,7 +157,13 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // ✨ implement
+    const fullTank = this.tankSize - this.tank
+    if (gallons <= fullTank) {
+      this.tank = this.tank + gallons
+    } else {
+      this.tank = this.tankSize
+    }
+    return this.tank * this.mpg
   }
 }
 
@@ -165,7 +181,7 @@ class Car {
  * })
  */
 function isEvenNumberAsync(number) {
-  // ✨ implement
+  return number % 2 === 0
 }
 
 module.exports = {
